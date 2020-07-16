@@ -1,4 +1,4 @@
-#Mon Jul 13 09:37:56 BRT 2020
-base.0=C\:\\Users\\igors\\ReactNative\\mines\\android\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
+#Thu Jul 16 17:07:27 BRT 2020
+base.0=C\:\\Users\\igors\\ReactNative\\minesgit\\android\\app\\build\\intermediates\\dex\\debug\\mergeDexDebug\\out\\classes.dex
 path.0=classes.dex
 renamed.0=classes.dex
