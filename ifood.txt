@@ -1,0 +1,166 @@
+Deve ser alinhado com o time Site Mercado / Ifood, informações referente à loja e PDV, para que os dados sejam cadastrados no template utilizado pela aplicação do parceiro. Para o cenário multi loja, existe o cadastro independente para cada loja.
+
+<STORE>0000</STORE> = Número da loja
+<FISCAL_STORE>0000</FISCAL_STORE> = Número da loja
+<POS>000</POS> = Número do PDV
+<FISCAL_POS>000</FISCAL_POS> = Número do PDV
+
+<CODE>00</CODE> (Entre <MEDIA> e </MEDIA>) = Número da finalizadora / entidade criada nos passos baixo.
+<DESCRIPTION>"Texto"</DESCRIPTION> (Entre <MEDIA> e </MEDIA>) = Descrição da finalizadora.
+
+Deve ser indicado para o time Site Mercado, o diretório a ser utilizado para processamento de arquivos gerados pela aplicação do parceiro (O processo de criação do diretório está indicado no passo a passo abaixo).
+
+-------------------------------------------
+
+Cadastrar finalizadora (Entidade) no Emporium
+Acesso -> Entidades -> Inclusão de novas entidades (Quadrado azul)
+Identificação: Número da entidade (Exemplo: 28)
+Tipo: Finalizadora
+Nome: Ifood
+
+-------------------------------------------
+
+Permitir acesso à finalizadora (Entidade) Ifood para os corretos grupos
+Acesso -> Controle de acesso -> Inclusão de novos Controles de Acesso (Quadrado Azul)
+Entidade: Ifood
+Grupo: Fiscais de Caixa / Operadores de Caixa / etc
+Tipo de acesso: Execução
+
+Após realizar as alterações necessárias, enviar carga de usuários para o PDV.
+
+-------------------------------------------
+No arquivo CMD.xml, deve existir a função 160, conforme o exemplo abaixo.
+
+<CMD>
+<ID read_only='yes'>160</ID>
+<AUTHORIZATIONS width='3'>0</AUTHORIZATIONS>
+<TYPE options='CMD_TYPE_OPTIONS'>1</TYPE>
+<COMMAND width='4'>0</COMMAND>
+<LAYOUT width='4'>0</LAYOUT>
+<REFERENCE_TEXT read_only='yes'>VENDA AUTOMATICA</REFERENCE_TEXT>
+<ALLOWED_STATES width='40'></ALLOWED_STATES>
+<TEXT width='40'>VENDA AUTOMATICA</TEXT>
+<PROMPT width='30'></PROMPT>
+<PROMPT_QUESTION width='4'>0</PROMPT_QUESTION>
+<OPTION_LIST horizontal_list='yes' allow_insert='yes' hide_label='yes'>
+<OPTION hide_label='yes'>
+<ID read_only='yes' hidden='yes'>3</ID>
+<VALUE width='4'>1</VALUE>
+<TEXT read_only='yes'>Imprimir Extra Tickets como Vinculados</TEXT>
+</OPTION>
+<OPTION hide_label='yes'>
+<ID read_only='yes' hidden='yes'>4</ID>
+<VALUE width='4'>0</VALUE>
+<TEXT read_only='yes'>Usar Venda de Referencia</TEXT>
+</OPTION>
+<OPTION hide_label='yes'>
+<ID read_only='yes' hidden='yes'>5</ID>
+<VALUE width='4'>0</VALUE>
+<TEXT read_only='yes'>Carregar Cliente</TEXT>
+</OPTION>
+<OPTION hide_label='yes'>
+<ID read_only='yes' hidden='yes'>6</ID>
+<VALUE width='4'>0</VALUE>
+<TEXT read_only='yes'>Ignorar Descontos em Itens</TEXT>
+</OPTION>
+<OPTION hide_label='yes'>
+<ID read_only='yes' hidden='yes'>7</ID>
+<VALUE options='NO_YES_OPTIONS'>0</VALUE>
+<TEXT read_only='yes'>Confirmar Antes de Finalizar</TEXT>
+</OPTION>
+<OPTION hide_label='yes'>
+<ID read_only='yes' hidden='yes'>9</ID>
+<VALUE options='YES_NO_OPTIONS'>0</VALUE>
+<TEXT read_only='yes'>Usar TRN como Coment▒rio de Venda</TEXT>
+</OPTION>
+<OPTION hide_label='yes'>
+<ID read_only='yes' hidden='yes'>69</ID>
+<VALUE width='4'>1</VALUE>
+<TEXT read_only='yes'>Ignorar Campanhas e descontos - pack</TEXT>
+</OPTION>
+</OPTION_LIST>
+<QUESTION_OPTION_LIST horizontal_list='yes' allow_insert='yes' hide_label='yes'>
+</QUESTION_OPTION_LIST>
+<SHELL_COMMAND_LIST horizontal_list='yes' allow_insert='yes' hide_label='yes'>
+<SHELL_COMMAND>
+<ID read_only='yes'>0</ID>
+<SHELL_COMMAND_USE read_only='yes'>Leitura de Dados</SHELL_COMMAND_USE>
+<SHELL_COMMAND_TEXT width='60'></SHELL_COMMAND_TEXT>
+</SHELL_COMMAND>
+</SHELL_COMMAND_LIST>
+</CMD>
+
+-------------------------------------------
+
+No arquivo MEDIA.xml, deve existir MEDIA referente ao Ifood entre as tags <MEDIA_LIST> e </MEDIA_LIST>, conforme o exemplo abaixo.
+
+<MEDIA allow_delete='yes' allow_copy='yes' id_item='DISPLAY_NAME'>
+<MEDIA_TYPE options='MEDIA_OPTIONS'>28</MEDIA_TYPE>
+<PRICE_TYPE options='PRICE_TYPE_OPTIONS'>0</PRICE_TYPE>
+<PRINT_NAME width='30'>Ifood</PRINT_NAME>
+<DISPLAY_NAME width='30'>Ifood</DISPLAY_NAME>
+<PRINTER_MEDIA_TYPE width='3'>6</PRINTER_MEDIA_TYPE>
+<CHANGE_MEDIA options='MEDIA_OPTIONS'>0</CHANGE_MEDIA>
+<ALLOW_CHANGE options='YES_NO_OPTIONS'>1</ALLOW_CHANGE>
+<ALLOW_LOAN options='YES_NO_OPTIONS'>1</ALLOW_LOAN>
+<QUANTITY_PICKUP options='YES_NO_OPTIONS'>0</QUANTITY_PICKUP>
+<OPEN_DRAWER options='YES_NO_OPTIONS'>1</OPEN_DRAWER>
+<CLOSE_DRAWER options='YES_NO_OPTIONS'>0</CLOSE_DRAWER>
+<PICKUP_AMOUNT width='15'>0</PICKUP_AMOUNT>
+<SHOW_PICKUP_AMOUNT options='YES_NO_OPTIONS'>0</SHOW_PICKUP_AMOUNT>
+<CUSTOMER_STATUS options='YES_NO_OPTIONS'>0</CUSTOMER_STATUS>
+<CUSTOMER_LIMIT options='YES_NO_OPTIONS'>0</CUSTOMER_LIMIT>
+<EFT_TYPE options='EFT_TYPE_OPTIONS'>0</EFT_TYPE>
+<VALUE_REQUIRED options='YES_NO_OPTIONS'>0</VALUE_REQUIRED>
+<TICKETS width='2'>0</TICKETS>
+<CHECK options='YES_NO_OPTIONS'>0</CHECK>
+<FINAL_REPORT options='YES_NO_OPTIONS'>0</FINAL_REPORT>
+<UNIT_VALUE width='10'>0</UNIT_VALUE>
+</MEDIA>
+      
+-------------------------------------------
+
+Caso o PDV seja dedicado a pedidos via Ifood, a função 329 para identificação de nota fiscal paulista não se faz necessária, tendo em vista que a aplicação trata a inserção da resposta 191, referente ao CPF, conforme o dado recebido no XML do Ifood. Se o XML conter a resposta 191, o CPF será inserido no XML enviado para o servidor EMporium e também no CFE gerado pelo SAT. Neste cenário o parâmetro <DATA_ENTRY_1_REQUIRED> pode ser mantido sem valor, conforme exemplo abaixo.
+
+ <DATA_ENTRY_1_REQUIRED options='YES_NO_OPTIONS'></DATA_ENTRY_1_REQUIRED>
+
+--- 
+
+Caso o PDV seja compartilhado, sendo utilizado tanto para vendas na loja quanto para vendas pelo Ifood, se faz necessário manter o parâmetro DATA_ENTRY_1_REQUIRED com o número da função utilizada para identificação do cliente, conforme exemplo abaixo.
+
+ <DATA_ENTRY_1_REQUIRED options='YES_NO_OPTIONS'>329</DATA_ENTRY_1_REQUIRED>
+
+No cenário onde o parâmetro DATA_ENTRY_1_REQUIRED tiver a função 329, se faz necessário pressionar a tecla "Volta" na solicitação de nota fiscal paulista. Neste caso a inserção do CPF na nota sempre será realizado conforme a resposta 191 do XML.
+
+-------------------------------------------
+
+No servidor, criar o diretório que receberá os arquivos do aplicativo do ifood, o qual deve ser compartilhado via samba. No ambiente do Ricoy, foi definido o diretório abaixo.
+/var/emporium/ifood
+
+Também foi criado um diretório para armazenamento dos arquivos processados a pedido do analista Igor
+/var/emporium/ifood/Processados
+
+-------------------------------------------
+
+Copiar o script enviaSiteMercado.sh, disponível em anexo ao chamado, para o diretório /var/emporium/excribo/bin
+
+-------------------------------------------
+
+No servidor, inserir chamada no cron (executar o comando "crontab -e" para editar o cron), que irá realizar a execução do script a cada 1 minuto, conforme o exemplo abaixo.
+0-59/1 * * * * /var/emporium/excribo/bin/enviaSiteMercado.sh
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
